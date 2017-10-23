@@ -14,8 +14,6 @@ import os
 sess = tf.InteractiveSession()
 
 
-# In[6]:
-
 def read_in_files(textfile_eng, textfile_ara, max_len):
     """Reads in english and arabic training files, thows out sentences which are longer than the max_len and
     returns a list of lists ([this, is, the, first, sentence], [this, the, second], ...) for each language"""
@@ -35,9 +33,6 @@ def read_in_files(textfile_eng, textfile_ara, max_len):
                     words_ara.append(sents_ara[index].split(' '))   
     
     return words_eng, words_ara
-
-
-# In[7]:
 
 def get_joint_vocab(words_eng, words_ara):
     """takes lists of lists as input, writes a joint vocabulary file and creates a word2index and index2word dictionary.
@@ -182,11 +177,12 @@ def prepare_data(text_eng, text_ara, max_len, batch_size):
     print('Prepare for bucketing...')
     sorted_eng, sorted_ara = order_by_size(indexed_eng, indexed_ara)
     print('Create iterator...')
+    #iterator = generate_sample(sorted_eng, sorted_ara)
     iterator = generate_sample(sorted_eng, sorted_ara)
     print('Generate batches...')
     
-    
-    return get_batch(iterator, batch_size)
+    return iterator, word2index, index2word
+    #return get_batch(iterator, batch_size)
 
 
 # In[41]:
